@@ -1,0 +1,82 @@
+[
+  {
+    "id": "opening-ceremony",
+    "name": { "en": "Opening Ceremony", "de": "Eröffnungszeremonie" },
+    "facilitator": "thembe",
+    "facilitatorFull": "Thembelihle Mchunu",
+    "date": "2026-03-14",
+    "day": { "en": "Sat", "de": "Sa" },
+    "time": "10:00 – 12:00",
+    "price": 25,
+    "currency": "€",
+    "description": {
+      "en": "A ceremonial opening to welcome you into the Oasis space. With cacao, sound, breathwork, and intention setting — a collective moment of arrival.",
+      "de": "Eine zeremonielle Eröffnung, um dich im Oasis-Raum willkommen zu heißen. Mit Kakao, Klang, Atemarbeit und Intentionssetzung — ein gemeinsamer Moment des Ankommens."
+    },
+    "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+  },
+  {
+    "id": "sonic-rest-reset",
+    "name": { "en": "Sonic Rest & Reset", "de": "Sonic Rest & Reset" },
+    "facilitator": "thembe",
+    "facilitatorFull": "Thembelihle Mchunu",
+    "date": "2026-03-17",
+    "day": { "en": "Tue", "de": "Di" },
+    "time": "17:00 – 20:00",
+    "price": 35,
+    "currency": "€",
+    "description": {
+      "en": "A deep sound bath journey to rest and reset your nervous system. Surrender to the healing vibrations of gongs, singing bowls, and voice.",
+      "de": "Eine tiefe Klangreise, um dein Nervensystem zur Ruhe zu bringen. Lass dich von den heilenden Vibrationen von Gongs, Klangschalen und Stimme tragen."
+    },
+    "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+  },
+  {
+    "id": "sacred-cycle",
+    "name": { "en": "Sacred Cycle", "de": "Sacred Cycle" },
+    "facilitator": "steffi",
+    "facilitatorFull": "Stefanie Gann",
+    "date": "2026-03-21",
+    "day": { "en": "Sat", "de": "Sa" },
+    "time": "10:00 – 12:00",
+    "price": 30,
+    "currency": "€",
+    "description": {
+      "en": "A women's circle exploring the wisdom of our cycles. A space for sharing, reflection, and reconnecting with our feminine nature.",
+      "de": "Ein Frauenkreis, der die Weisheit unserer Zyklen erkundet. Ein Raum zum Teilen, Reflektieren und Wiederverbinden mit unserer weiblichen Natur."
+    },
+    "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+  },
+  {
+    "id": "tea-lounge",
+    "name": { "en": "Tea Lounge", "de": "Tee-Lounge" },
+    "facilitator": "thembe",
+    "facilitatorFull": "Thembelihle Mchunu",
+    "date": "2026-03-28",
+    "day": { "en": "Sat", "de": "Sa" },
+    "time": "10:00 – 12:00",
+    "price": 15,
+    "currency": "€",
+    "description": {
+      "en": "A slow, intentional gathering over tea. No agenda, no performance — just presence, warmth, and conversation among women.",
+      "de": "Ein langsames, achtsames Zusammenkommen bei Tee. Keine Agenda, keine Performance — nur Präsenz, Wärme und Gespräche unter Frauen."
+    },
+    "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+  },
+  {
+    "id": "muse-choir",
+    "name": { "en": "Muse Choir", "de": "Muse Choir" },
+    "facilitator": "thembe",
+    "facilitatorFull": "Thembelihle Mchunu",
+    "date": "2026-04-04",
+    "day": { "en": "Sat", "de": "Sa" },
+    "time": "10:00 – 12:00",
+    "price": 20,
+    "currency": "€",
+    "description": {
+      "en": "A group singing experience — no experience needed. Find your voice, feel the resonance of singing together, and let the music move through you.",
+      "de": "Ein gemeinsames Singerlebnis — keine Erfahrung nötig. Finde deine Stimme, spüre die Resonanz des gemeinsamen Singens und lass die Musik durch dich fließen."
+    },
+    "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+  }
+]

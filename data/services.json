@@ -1,0 +1,110 @@
+{
+  "thembe": {
+    "name": "Thembe",
+    "fullName": "Thembelihle Mchunu",
+    "role": { "en": "Sound · Breathwork · Meditation · Movement", "de": "Klang · Atemarbeit · Meditation · Bewegung" },
+    "bio": {
+      "en": "Thembe creates immersive sound and breathwork experiences that guide you into deep states of rest and presence.",
+      "de": "Thembe kreiert immersive Klang- und Atemarbeit-Erlebnisse, die dich in tiefe Zustände der Ruhe und Präsenz führen."
+    },
+    "email": "PLACEHOLDER@email.com",
+    "services": [
+      {
+        "id": "private-sound-bath",
+        "name": { "en": "Private Sound Bath", "de": "Privates Klangbad" },
+        "description": {
+          "en": "A one-on-one sound bath tailored to your needs. Deep relaxation through singing bowls, gongs, and vocal toning.",
+          "de": "Ein individuelles Klangbad, abgestimmt auf deine Bedürfnisse. Tiefe Entspannung durch Klangschalen, Gongs und Stimmarbeit."
+        },
+        "duration": "60 min",
+        "price": 80,
+        "currency": "€",
+        "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+      },
+      {
+        "id": "breathwork-session",
+        "name": { "en": "Private Breathwork Session", "de": "Private Atemarbeit-Sitzung" },
+        "description": {
+          "en": "A guided breathwork journey to release tension, process emotions, and reconnect with your body.",
+          "de": "Eine geführte Atemreise, um Spannungen zu lösen, Emotionen zu verarbeiten und dich wieder mit deinem Körper zu verbinden."
+        },
+        "duration": "60 min",
+        "price": 70,
+        "currency": "€",
+        "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+      }
+    ]
+  },
+  "elisabeth": {
+    "name": "Elisabeth",
+    "fullName": "Elisabeth Bernbeck",
+    "role": { "en": "Personal Massage · Event Organisation", "de": "Massage · Eventorganisation" },
+    "bio": {
+      "en": "Elisabeth brings presence and care through therapeutic massage, helping you release, soften, and return to your body.",
+      "de": "Elisabeth bringt Präsenz und Fürsorge durch therapeutische Massage und hilft dir, loszulassen, weich zu werden und in deinen Körper zurückzukehren."
+    },
+    "email": "elisabethbernbeck@gmail.com",
+    "services": [
+      {
+        "id": "relaxation-massage",
+        "name": { "en": "Relaxation Massage", "de": "Entspannungsmassage" },
+        "description": {
+          "en": "A full-body massage focused on deep relaxation and releasing muscular tension.",
+          "de": "Eine Ganzkörpermassage mit Fokus auf tiefe Entspannung und das Lösen muskulärer Verspannungen."
+        },
+        "duration": "60 min",
+        "price": 70,
+        "currency": "€",
+        "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+      },
+      {
+        "id": "deep-tissue-massage",
+        "name": { "en": "Deep Tissue Massage", "de": "Tiefengewebsmassage" },
+        "description": {
+          "en": "A deeper, more targeted massage working into chronic tension patterns and tight areas.",
+          "de": "Eine tiefere, gezieltere Massage, die chronische Verspannungsmuster und verhärtete Bereiche bearbeitet."
+        },
+        "duration": "75 min",
+        "price": 90,
+        "currency": "€",
+        "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+      }
+    ]
+  },
+  "steffi": {
+    "name": "Steffi",
+    "fullName": "Stefanie Gann",
+    "role": { "en": "Inner Compass Guide", "de": "Innerer Kompass Guide" },
+    "bio": {
+      "en": "Steffi guides women through life coaching and women's circles, creating space for reflection, clarity, and self-discovery.",
+      "de": "Steffi begleitet Frauen durch Life Coaching und Frauenkreise und schafft Raum für Reflexion, Klarheit und Selbstentdeckung."
+    },
+    "email": "stefanie.gann@gmx.net",
+    "services": [
+      {
+        "id": "life-coaching",
+        "name": { "en": "Life Coaching Session", "de": "Life-Coaching-Sitzung" },
+        "description": {
+          "en": "A one-on-one coaching session to explore what's alive in you, find clarity, and take your next step with confidence.",
+          "de": "Eine Einzelcoaching-Sitzung, um zu erkunden, was in dir lebendig ist, Klarheit zu finden und deinen nächsten Schritt mit Zuversicht zu gehen."
+        },
+        "duration": "60 min",
+        "price": 75,
+        "currency": "€",
+        "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+      },
+      {
+        "id": "inner-compass-package",
+        "name": { "en": "Inner Compass Package (4 Sessions)", "de": "Innerer Kompass Paket (4 Sitzungen)" },
+        "description": {
+          "en": "A four-session coaching journey to go deeper into self-discovery, patterns, and intentional living.",
+          "de": "Eine vierteilige Coaching-Reise, um tiefer in Selbstentdeckung, Muster und bewusstes Leben einzutauchen."
+        },
+        "duration": "4 × 60 min",
+        "price": 260,
+        "currency": "€",
+        "stripeLink": "https://buy.stripe.com/PLACEHOLDER"
+      }
+    ]
+  }
+}

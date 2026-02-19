@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steffi – Oasis</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <div class="lang-toggle">
+    <button id="btn-de">DE</button><span>|</span><button id="btn-en" class="active">EN</button>
+  </div>
+
+  <div class="page-wrapper">
+    <div class="facilitator-page content">
+      <a href="../home.html#services" class="back-link" data-en="&larr; Back" data-de="&larr; Zurück">&larr; Back</a>
+
+      <div class="facilitator-header">
+        <h1>Steffi</h1>
+        <p class="about-role" id="f-role"></p>
+        <p class="about-bio" id="f-bio"></p>
+      </div>
+
+      <h2 class="script-title" data-en="Private Sessions" data-de="Private Sitzungen">Private Sessions</h2>
+      <div class="facilitator-services" id="f-services"></div>
+
+      <div style="text-align: center; margin-top: 2.5rem;">
+        <a href="" id="f-contact" class="btn-outline" data-en="Get in Touch" data-de="Kontakt">Get in Touch</a>
+      </div>
+    </div>
+
+    <footer>
+      <nav class="footer-links">
+        <a href="../legal/steffi-agb.html" data-en="Terms & Conditions" data-de="AGB">Terms & Conditions</a>
+        <a href="../legal/steffi-datenschutz.html" data-en="Privacy Policy" data-de="Datenschutz">Privacy Policy</a>
+        <a href="../home.html">Home</a>
+      </nav>
+      <p class="copyright">&copy; 2026 Elisabeth Bernbeck. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    var FACILITATOR_KEY = 'steffi';
+    var currentLang = localStorage.getItem('oasis-lang') || 'en';
+    var btnDe = document.getElementById('btn-de');
+    var btnEn = document.getElementById('btn-en');
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      localStorage.setItem('oasis-lang', lang);
+      btnDe.classList.toggle('active', lang === 'de');
+      btnEn.classList.toggle('active', lang === 'en');
+      document.querySelectorAll('[data-en]').forEach(function (el) {
+        if (el.tagName === 'INPUT') el.placeholder = el.getAttribute('data-' + lang);
+        else el.innerHTML = el.getAttribute('data-' + lang);
+      });
+      if (window.facData) renderFacilitator(window.facData);
+    }
+
+    btnDe.addEventListener('click', function () { setLang('de'); });
+    btnEn.addEventListener('click', function () { setLang('en'); });
+
+    fetch('../data/services.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        window.facData = data[FACILITATOR_KEY];
+        renderFacilitator(window.facData);
+      });
+
+    function renderFacilitator(f) {
+      var lang = currentLang;
+      document.getElementById('f-role').textContent = f.role[lang];
+      document.getElementById('f-bio').textContent = f.bio[lang];
+      document.getElementById('f-contact').href = 'mailto:' + f.email;
+      document.getElementById('f-services').innerHTML = f.services.map(function (s) {
+        return '<div class="facilitator-service">' +
+          '<h3>' + s.name[lang] + '</h3>' +
+          '<p>' + s.description[lang] + '</p>' +
+          '<p class="service-meta">' + s.duration + ' · ' + s.currency + s.price + '</p>' +
+          '<a href="' + s.stripeLink + '" target="_blank" class="btn-outline btn-sm">' + (lang === 'de' ? 'Buchen' : 'Book') + '</a>' +
+        '</div>';
+      }).join('');
+    }
+
+    setLang(currentLang);
+  </script>
+</body>
+</html>

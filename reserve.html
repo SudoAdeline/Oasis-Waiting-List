@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve – Oasis</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button id="btn-de">DE</button>
+    <span>|</span>
+    <button id="btn-en" class="active">EN</button>
+  </div>
+
+  <div class="page-wrapper">
+    <div class="reserve-page content">
+
+      <a href="home.html#calendar" class="back-link" data-en="&larr; Back to Calendar" data-de="&larr; Zurück zum Kalender">&larr; Back to Calendar</a>
+
+      <p class="script-heading" data-en="reserve your spot" data-de="reserviere deinen Platz">reserve your spot</p>
+
+      <!-- Event Details (populated by JS) -->
+      <div class="reserve-details" id="reserve-details">
+        <h3 id="res-event-name">Loading...</h3>
+        <p id="res-event-date"></p>
+        <p id="res-event-time"></p>
+        <p id="res-event-facilitator"></p>
+        <p id="res-event-price" style="margin-top: 0.75rem; color: var(--text-light); font-size: 1.1rem;"></p>
+      </div>
+
+      <!-- Reservation Form -->
+      <form class="reserve-form signup-form" id="reserve-form">
+        <div class="form-group">
+          <input type="text" id="res-name" placeholder="your name" data-en="your name" data-de="dein Name" required autocomplete="given-name">
+        </div>
+        <div class="form-group">
+          <input type="email" id="res-email" placeholder="your email" data-en="your email" data-de="deine E-Mail" required autocomplete="email">
+        </div>
+        <label id="res-consent">
+          <input type="checkbox" required>
+          <span data-en="I agree to the <a href='#' id='res-tc-link'>Terms & Conditions</a> and <a href='#' id='res-pp-link'>Privacy Policy</a> of the facilitator." data-de="Ich stimme den <a href='#' id='res-tc-link'>AGB</a> und der <a href='#' id='res-pp-link'>Datenschutzerklärung</a> der Facilitatorin zu.">I agree to the <a href="#" id="res-tc-link">Terms & Conditions</a> and <a href="#" id="res-pp-link">Privacy Policy</a> of the facilitator.</span>
+        </label>
+        <button type="submit" class="submit-btn" data-en="Pay & Reserve" data-de="Bezahlen & Reservieren">Pay & Reserve</button>
+      </form>
+
+    </div>
+
+    <footer>
+      <nav class="footer-links">
+        <a href="home.html">Home</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html" data-en="Privacy" data-de="Datenschutz">Privacy</a>
+      </nav>
+      <p class="copyright">&copy; 2026 Elisabeth Bernbeck. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // ── Language Toggle ──
+    var currentLang = localStorage.getItem('oasis-lang') || 'en';
+    var btnDe = document.getElementById('btn-de');
+    var btnEn = document.getElementById('btn-en');
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      localStorage.setItem('oasis-lang', lang);
+      btnDe.classList.toggle('active', lang === 'de');
+      btnEn.classList.toggle('active', lang === 'en');
+      document.querySelectorAll('[data-en]').forEach(function (el) {
+        if (el.tagName === 'INPUT' && el.type !== 'checkbox') {
+          el.placeholder = el.getAttribute('data-' + lang);
+        } else {
+          el.innerHTML = el.getAttribute('data-' + lang);
+        }
+      });
+      if (window.currentEvent) fillEvent(window.currentEvent);
+    }
+
+    btnDe.addEventListener('click', function () { setLang('de'); });
+    btnEn.addEventListener('click', function () { setLang('en'); });
+
+    // ── Legal link mapping ──
+    var legalLinks = {
+      thembe: { tc: 'legal/thembe-agb.html', pp: 'legal/thembe-datenschutz.html' },
+      elisabeth: { tc: 'legal/elisabeth-agb.html', pp: 'legal/elisabeth-datenschutz.html' },
+      steffi: { tc: 'legal/steffi-agb.html', pp: 'legal/steffi-datenschutz.html' }
+    };
+
+    // ── Inline event data ──
+    var eventsData = [
+      {"id":"opening-ceremony","name":{"en":"Opening Ceremony","de":"Eröffnungszeremonie"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-14","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":25,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"sonic-rest-reset","name":{"en":"Sonic Rest & Reset","de":"Sonic Rest & Reset"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-17","day":{"en":"Tue","de":"Di"},"time":"17:00 – 20:00","price":35,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"sacred-cycle","name":{"en":"Sacred Cycle","de":"Sacred Cycle"},"facilitator":"steffi","facilitatorFull":"Stefanie Gann","date":"2026-03-21","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":30,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"tea-lounge","name":{"en":"Tea Lounge","de":"Tee-Lounge"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-28","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":15,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"muse-choir","name":{"en":"Muse Choir","de":"Muse Choir"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-04-04","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":20,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"}
+    ];
+
+    // ── Load event from URL param ──
+    var params = new URLSearchParams(window.location.search);
+    var eventId = params.get('event');
+    var ev = eventsData.find(function (e) { return e.id === eventId; });
+    if (ev) {
+      window.currentEvent = ev;
+      fillEvent(ev);
+    } else {
+      document.getElementById('res-event-name').textContent = 'Event not found';
+    }
+
+    function fillEvent(ev) {
+      var lang = currentLang;
+      var d = new Date(ev.date + 'T00:00:00');
+      var options = lang === 'de'
+        ? { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }
+        : { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+      document.getElementById('res-event-name').textContent = ev.name[lang];
+      document.getElementById('res-event-date').textContent = d.toLocaleDateString(lang === 'de' ? 'de-DE' : 'en-US', options);
+      document.getElementById('res-event-time').textContent = ev.time;
+      document.getElementById('res-event-facilitator').textContent = (lang === 'de' ? 'mit ' : 'with ') + ev.facilitatorFull;
+      document.getElementById('res-event-price').textContent = ev.currency + ev.price;
+
+      // Set legal links
+      var links = legalLinks[ev.facilitator];
+      var tcLink = document.getElementById('res-tc-link');
+      var ppLink = document.getElementById('res-pp-link');
+      if (tcLink) tcLink.href = links.tc;
+      if (ppLink) ppLink.href = links.pp;
+    }
+
+    // ── Form submission → Stripe Payment Link ──
+    document.getElementById('reserve-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (window.currentEvent && window.currentEvent.stripeLink && window.currentEvent.stripeLink !== 'https://buy.stripe.com/PLACEHOLDER') {
+        window.location.href = window.currentEvent.stripeLink;
+      } else {
+        alert(currentLang === 'de'
+          ? 'Zahlung wird bald verfügbar sein. Danke für dein Interesse!'
+          : 'Payment coming soon. Thank you for your interest!');
+      }
+    });
+
+    // Init
+    setLang(currentLang);
+  </script>
+</body>
+</html>
