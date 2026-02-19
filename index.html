@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oasis Collective – Coming Soon</title>
+  <meta name="description" content="Oasis – a sanctuary for women to rest and realign. Join our waiting list for cacao ceremonies, sound baths, therapy, women circles and more.">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Oasis Collective – Coming Soon">
+  <meta property="og:description" content="A sanctuary for women to rest and realign. Join our waiting list.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oasiscollective.de">
+</head>
+<body class="has-bg">
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle">
+    <button id="btn-de">DE</button>
+    <span>|</span>
+    <button id="btn-en" class="active">EN</button>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- Logo -->
+    <div class="logo fade-in">
+      <img src="assets/logo.png" alt="Oasis Collective Logo">
+    </div>
+
+    <!-- Heading -->
+    <div class="content">
+      <p class="script-heading fade-in" data-de="Schwesternschaft feiern" data-en="celebrating sisterhood">celebrating sisterhood</p>
+      <h1 class="fade-in">Coming Soon</h1>
+      <p class="subtitle fade-in">
+        <span data-de="Oasis - ein Ort für Frauen, einfach zu sein." data-en="oasis is a sanctuary for women to just be.">oasis is a sanctuary for women to just be.</span><br>
+        <span data-de="Kakaozeremonien · Klangbäder · Massage" data-en="cacao ceremonies · sound baths · massage">cacao ceremonies · sound baths · massage</span><br>
+        <span data-de="Coaching · Frauenkreise · Tee-Lounge" data-en="coaching · women circles · tea lounge">coaching · women circles · tea lounge</span>
+      </p>
+
+      <!-- Video -->
+      <div class="video-container fade-in">
+        <video controls playsinline preload="metadata">
+          <source src="assets/OASIS_INTRO_VIDEO.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <div class="divider fade-in"></div>
+
+      <!-- Signup Form -->
+      <div id="signup-section" class="fade-in">
+        <p class="script-heading" data-de="Trag dich in unsere Warteliste ein" data-en="join our waiting list">join our waiting list</p>
+
+        <form class="signup-form" id="waitlist-form"
+              action="https://docs.google.com/forms/d/e/1FAIpQLSeufxtRSt-exz1xaeb_qMT-ZYPXfEtREQE66vGAR3hrWesylA/formResponse"
+              method="POST"
+              target="hidden-iframe">
+          <div class="form-group">
+            <input type="text"
+                   id="input-name"
+                   name="entry.803396824"
+                   placeholder="your name"
+                   data-de="dein Name"
+                   data-en="your name"
+                   required
+                   autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <input type="email"
+                   id="input-email"
+                   name="entry.1589229907"
+                   placeholder="your email"
+                   data-de="deine E-Mail"
+                   data-en="your email"
+                   required
+                   autocomplete="email">
+          </div>
+          <button type="submit" class="submit-btn" data-de="Auf die Warteliste" data-en="Join the Waitlist">Join the Waitlist</button>
+          <p class="form-consent" data-de="Mit deiner Anmeldung stimmst du unserer <a href='datenschutz.html'>Datenschutzerklärung</a> zu. Wir verwenden deine Daten nur, um dich zu informieren, wenn Oasis startet." data-en="by signing up you agree to our <a href='datenschutz.html'>privacy policy</a>. we will only use your data to notify you when oasis launches.">by signing up you agree to our <a href="datenschutz.html">privacy policy</a>. we will only use your data to notify you when oasis launches.</p>
+        </form>
+
+        <div class="form-success" id="form-success">
+          <p data-de="Danke, schöne Seele.<br>Wir melden uns bald." data-en="thank you, beautiful soul.<br>we'll be in touch soon.">thank you, beautiful soul.<br>we'll be in touch soon.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hidden iframe for Google Forms submission without redirect -->
+    <iframe name="hidden-iframe" id="hidden-iframe" style="display:none;"></iframe>
+
+    <!-- Footer -->
+    <footer>
+      <nav class="footer-links">
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+      <p class="copyright">&copy; 2026 Elisabeth Bernbeck. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Language switcher
+    const btnDe = document.getElementById('btn-de');
+    const btnEn = document.getElementById('btn-en');
+
+    function setLang(lang) {
+      document.documentElement.lang = lang;
+      localStorage.setItem('oasis-lang', lang);
+
+      // Toggle active button
+      btnDe.classList.toggle('active', lang === 'de');
+      btnEn.classList.toggle('active', lang === 'en');
+
+      // Swap text content
+      document.querySelectorAll('[data-en]').forEach(function (el) {
+        if (el.tagName === 'INPUT') {
+          el.placeholder = el.getAttribute('data-' + lang);
+        } else if (el.classList.contains('form-consent') || el.closest('.form-success')) {
+          el.innerHTML = el.getAttribute('data-' + lang);
+        } else {
+          el.textContent = el.getAttribute('data-' + lang);
+        }
+      });
+    }
+
+    btnDe.addEventListener('click', function () { setLang('de'); });
+    btnEn.addEventListener('click', function () { setLang('en'); });
+
+    // Default to saved preference or German
+    var saved = localStorage.getItem('oasis-lang') || 'en';
+    setLang(saved);
+
+    // Show success message after form submission via hidden iframe
+    const form = document.getElementById('waitlist-form');
+    const successMsg = document.getElementById('form-success');
+
+    form.addEventListener('submit', function () {
+      setTimeout(function () {
+        form.style.display = 'none';
+        successMsg.classList.add('visible');
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
