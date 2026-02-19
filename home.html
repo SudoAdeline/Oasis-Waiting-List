@@ -19,22 +19,24 @@
     <a href="#" class="nav-logo">
       <img src="assets/logo.png" alt="Oasis">
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="#mission" data-en="Mission" data-de="Mission">Mission</a>
       <a href="#calendar" data-en="Calendar" data-de="Kalender">Calendar</a>
       <a href="#services" data-en="Services" data-de="Angebote">Services</a>
       <a href="#about" data-en="About Us" data-de="Über uns">About Us</a>
-      <span class="nav-lang">
-        <button id="btn-de">DE</button>
-        <span class="nav-lang-sep">|</span>
-        <button id="btn-en" class="active">EN</button>
-      </span>
     </div>
+    <span class="nav-lang">
+      <button id="btn-de">DE</button>
+      <span class="nav-lang-sep">|</span>
+      <button id="btn-en" class="active">EN</button>
+    </span>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- ═══════════ HERO ═══════════ -->
   <section class="hero" id="hero">
-    <canvas id="hero-canvas"></canvas>
     <div class="hero-bg" style="background-image: url('assets/bg-water.png')"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -146,17 +148,20 @@
 
   <script>
     // ── Inline Data (works on file:// and server) ──
+    // ── Event data ──
+    // To update availability: increment "reserved" by 1 for each new booking.
+    // "capacity: null" means unlimited spots.
     var eventsData = [
-      {"id":"opening-ceremony","name":{"en":"Opening Ceremony","de":"Eröffnungszeremonie"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-14","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":25,"currency":"€","description":{"en":"A ceremonial opening to welcome you into the Oasis space. With cacao, sound, breathwork, and intention setting — a collective moment of arrival.","de":"Eine zeremonielle Eröffnung, um dich im Oasis-Raum willkommen zu heißen. Mit Kakao, Klang, Atemarbeit und Intentionssetzung — ein gemeinsamer Moment des Ankommens."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"sonic-rest-reset","name":{"en":"Sonic Rest & Reset","de":"Sonic Rest & Reset"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-17","day":{"en":"Tue","de":"Di"},"time":"17:00 – 20:00","price":35,"currency":"€","description":{"en":"A deep sound bath journey to rest and reset your nervous system. Surrender to the healing vibrations of gongs, singing bowls, and voice.","de":"Eine tiefe Klangreise, um dein Nervensystem zur Ruhe zu bringen. Lass dich von den heilenden Vibrationen von Gongs, Klangschalen und Stimme tragen."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"sacred-cycle","name":{"en":"Sacred Cycle","de":"Sacred Cycle"},"facilitator":"steffi","facilitatorFull":"Stefanie Gann","date":"2026-03-21","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":30,"currency":"€","description":{"en":"A women's circle exploring the wisdom of our cycles. A space for sharing, reflection, and reconnecting with our feminine nature.","de":"Ein Frauenkreis, der die Weisheit unserer Zyklen erkundet. Ein Raum zum Teilen, Reflektieren und Wiederverbinden mit unserer weiblichen Natur."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"tea-lounge","name":{"en":"Tea Lounge","de":"Tee-Lounge"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-28","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":15,"currency":"€","description":{"en":"A slow, intentional gathering over tea. No agenda, no performance — just presence, warmth, and conversation among women.","de":"Ein langsames, achtsames Zusammenkommen bei Tee. Keine Agenda, keine Performance — nur Präsenz, Wärme und Gespräche unter Frauen."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"muse-choir","name":{"en":"Muse Choir","de":"Muse Choir"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-04-04","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":20,"currency":"€","description":{"en":"A group singing experience — no experience needed. Find your voice, feel the resonance of singing together, and let the music move through you.","de":"Ein gemeinsames Singerlebnis — keine Erfahrung nötig. Finde deine Stimme, spüre die Resonanz des gemeinsamen Singens und lass die Musik durch dich fließen."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}
+      {"id":"opening-ceremony","name":{"en":"Opening Ceremony","de":"Eröffnungszeremonie"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-14","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":25,"currency":"€","capacity":20,"reserved":0,"description":{"en":"A ceremonial opening to welcome you into the Oasis space. With cacao, sound, breathwork, and intention setting — a collective moment of arrival.","de":"Eine zeremonielle Eröffnung, um dich im Oasis-Raum willkommen zu heißen. Mit Kakao, Klang, Atemarbeit und Intentionssetzung — ein gemeinsamer Moment des Ankommens."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"sonic-rest-reset","name":{"en":"Sonic Rest & Reset","de":"Sonic Rest & Reset"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-17","day":{"en":"Tue","de":"Di"},"time":"17:00 – 20:00","price":35,"currency":"€","capacity":15,"reserved":0,"description":{"en":"A deep sound bath journey to rest and reset your nervous system. Surrender to the healing vibrations of gongs, singing bowls, and voice.","de":"Eine tiefe Klangreise, um dein Nervensystem zur Ruhe zu bringen. Lass dich von den heilenden Vibrationen von Gongs, Klangschalen und Stimme tragen."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"sacred-cycle","name":{"en":"Sacred Cycle","de":"Sacred Cycle"},"facilitator":"steffi","facilitatorFull":"Stefanie Gann","date":"2026-03-21","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":30,"currency":"€","capacity":12,"reserved":0,"description":{"en":"A women's circle exploring the wisdom of our cycles. A space for sharing, reflection, and reconnecting with our feminine nature.","de":"Ein Frauenkreis, der die Weisheit unserer Zyklen erkundet. Ein Raum zum Teilen, Reflektieren und Wiederverbinden mit unserer weiblichen Natur."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"tea-lounge","name":{"en":"Tea Lounge","de":"Tee-Lounge"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-28","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":15,"currency":"€","capacity":12,"reserved":0,"description":{"en":"A slow, intentional gathering over tea. No agenda, no performance — just presence, warmth, and conversation among women.","de":"Ein langsames, achtsames Zusammenkommen bei Tee. Keine Agenda, keine Performance — nur Präsenz, Wärme und Gespräche unter Frauen."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"muse-choir","name":{"en":"Muse Choir","de":"Muse Choir"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-04-04","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":20,"currency":"€","capacity":20,"reserved":0,"description":{"en":"A group singing experience — no experience needed. Find your voice, feel the resonance of singing together, and let the music move through you.","de":"Ein gemeinsames Singerlebnis — keine Erfahrung nötig. Finde deine Stimme, spüre die Resonanz des gemeinsamen Singens und lass die Musik durch dich fließen."},"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}
     ];
 
     var servicesData = {
-      "thembe":{"name":"Thembe","fullName":"Thembelihle Mchunu","role":{"en":"Sound · Breathwork · Meditation · Movement","de":"Klang · Atemarbeit · Meditation · Bewegung"},"bio":{"en":"Thembe creates immersive sound and breathwork experiences that guide you into deep states of rest and presence.","de":"Thembe kreiert immersive Klang- und Atemarbeit-Erlebnisse, die dich in tiefe Zustände der Ruhe und Präsenz führen."},"email":"PLACEHOLDER@email.com","services":[{"id":"private-sound-bath","name":{"en":"Private Sound Bath","de":"Privates Klangbad"},"description":{"en":"A one-on-one sound bath tailored to your needs. Deep relaxation through singing bowls, gongs, and vocal toning.","de":"Ein individuelles Klangbad, abgestimmt auf deine Bedürfnisse. Tiefe Entspannung durch Klangschalen, Gongs und Stimmarbeit."},"duration":"60 min","price":80,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"id":"breathwork-session","name":{"en":"Private Breathwork Session","de":"Private Atemarbeit-Sitzung"},"description":{"en":"A guided breathwork journey to release tension, process emotions, and reconnect with your body.","de":"Eine geführte Atemreise, um Spannungen zu lösen, Emotionen zu verarbeiten und dich wieder mit deinem Körper zu verbinden."},"duration":"60 min","price":70,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]},
-      "elisabeth":{"name":"Elisabeth","fullName":"Elisabeth Bernbeck","role":{"en":"Personal Massage · Event Organisation","de":"Massage · Eventorganisation"},"bio":{"en":"Elisabeth brings presence and care through therapeutic massage, helping you release, soften, and return to your body.","de":"Elisabeth bringt Präsenz und Fürsorge durch therapeutische Massage und hilft dir, loszulassen, weich zu werden und in deinen Körper zurückzukehren."},"email":"elisabethbernbeck@gmail.com","services":[{"id":"relaxation-massage","name":{"en":"Relaxation Massage","de":"Entspannungsmassage"},"description":{"en":"A full-body massage focused on deep relaxation and releasing muscular tension.","de":"Eine Ganzkörpermassage mit Fokus auf tiefe Entspannung und das Lösen muskulärer Verspannungen."},"duration":"60 min","price":70,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"id":"deep-tissue-massage","name":{"en":"Deep Tissue Massage","de":"Tiefengewebsmassage"},"description":{"en":"A deeper, more targeted massage working into chronic tension patterns and tight areas.","de":"Eine tiefere, gezieltere Massage, die chronische Verspannungsmuster und verhärtete Bereiche bearbeitet."},"duration":"75 min","price":90,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]},
+      "thembe":{"name":"Thembe","fullName":"Thembelihle Mchunu","role":{"en":"Sound · Breathwork · Meditation · Movement","de":"Klang · Atemarbeit · Meditation · Bewegung"},"bio":{"en":"Thembe creates immersive sound and breathwork experiences that guide you into deep states of rest and presence.","de":"Thembe kreiert immersive Klang- und Atemarbeit-Erlebnisse, die dich in tiefe Zustände der Ruhe und Präsenz führen."},"email":"PLACEHOLDER@email.com","services":[{"id":"reset-ritual","name":{"en":"Reset Ritual","de":"Reset Ritual"},"description":{"en":"A full immersive journey through sound, breath and presence. Arrive, soften, and be restored.","de":"Eine vollständige immersive Reise durch Klang, Atem und Präsenz. Ankommen, weicher werden, erneuert hervorgehen."},"duration":"60 min","currency":"€","tiers":[{"info":{"en":"Private · 1:1","de":"Privat · 1:1"},"price":120,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"info":{"en":"Intimate Circle · max 4 · lying","de":"Intimkreis · max 4 · liegend"},"price":50,"pp":true,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"info":{"en":"Open Circle · max 10 · seated","de":"Offener Kreis · max 10 · sitzend"},"price":30,"pp":true,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]},{"id":"revive","name":{"en":"Revive","de":"Revive"},"description":{"en":"A short, potent session to clear, centre and recharge — enough to shift the whole day.","de":"Eine kurze, intensive Session zum Klären, Zentrieren und Wiederaufladen — genug, um den ganzen Tag zu verändern."},"duration":"30 min","currency":"€","tiers":[{"info":{"en":"Private · 1:1","de":"Privat · 1:1"},"price":60,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"info":{"en":"Intimate Circle · max 4 · lying","de":"Intimkreis · max 4 · liegend"},"price":30,"pp":true,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"info":{"en":"Open Circle · max 10 · seated","de":"Offener Kreis · max 10 · sitzend"},"price":18,"pp":true,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]},{"id":"guided-meditation","name":{"en":"Guided Meditation","de":"Geführte Meditation"},"description":{"en":"A gentle journey inward — Thembe guides you through breath and awareness into a place of deep stillness.","de":"Eine sanfte Reise nach innen — Thembe führt dich durch Atem und Achtsamkeit in tiefe Stille."},"duration":"60 min","currency":"€","tiers":[{"info":{"en":"Private · 1:1","de":"Privat · 1:1"},"price":85,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"info":{"en":"Group · max 10 · seated","de":"Gruppe · max 10 · sitzend"},"price":25,"pp":true,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]}]},
+      "elisabeth":{"name":"Elisabeth","fullName":"Elisabeth Bernbeck","role":{"en":"Personal Massage · Event Organisation","de":"Massage · Eventorganisation"},"bio":{"en":"Elisabeth brings presence and care through therapeutic massage, helping you release, soften, and return to your body.","de":"Elisabeth bringt Präsenz und Fürsorge durch therapeutische Massage und hilft dir, loszulassen, weich zu werden und in deinen Körper zurückzukehren."},"email":"elisabethbernbeck@gmail.com","services":[{"id":"gesichtsmassage","name":{"en":"Facial Massage","de":"Gesichtsmassage"},"description":{"en":"A gentle release for the face, jaw and forehead.","de":"Eine sanfte Entspannung für Gesicht, Kiefer und Stirn."},"duration":"20 min","price":15,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"id":"nacken-kopf-schulter","name":{"en":"Neck, Head & Shoulder Massage","de":"Nacken-, Kopf- & Schultermassage"},"description":{"en":"Targeted relief for neck, head and shoulder tension.","de":"Gezielte Linderung von Spannungen in Nacken, Kopf und Schultern."},"currency":"€","tiers":[{"duration":"30 min","price":25,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"duration":"45 min","price":35,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]},{"id":"ganzkorpermassage","name":{"en":"Full Body Massage","de":"Ganzkörpermassage"},"description":{"en":"A full-body massage for deep relaxation and full muscular release.","de":"Eine Ganzkörpermassage für tiefe Entspannung und vollständige Muskelentspannung."},"currency":"€","tiers":[{"duration":"60 min","price":45,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"duration":"90 min","price":65,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]},{"id":"psoas-massage","name":{"en":"Deep Relax Psoas Massage","de":"Deep Relax Psoas Massage"},"description":{"en":"A specialised deep massage targeting the psoas — restoring nervous system balance and releasing deep-held tension.","de":"Eine spezialisierte Psoas-Tiefenmassage — für Nervenbalance und das Lösen tiefgehaltener Spannungen."},"currency":"€","tiers":[{"duration":"90 min","price":90,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"duration":"120 min","price":120,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]}]},
       "steffi":{"name":"Steffi","fullName":"Stefanie Gann","role":{"en":"Inner Compass Guide","de":"Innerer Kompass Guide"},"bio":{"en":"Steffi guides women through life coaching and women's circles, creating space for reflection, clarity, and self-discovery.","de":"Steffi begleitet Frauen durch Life Coaching und Frauenkreise und schafft Raum für Reflexion, Klarheit und Selbstentdeckung."},"email":"stefanie.gann@gmx.net","services":[{"id":"life-coaching","name":{"en":"Life Coaching Session","de":"Life-Coaching-Sitzung"},"description":{"en":"A one-on-one coaching session to explore what's alive in you, find clarity, and take your next step with confidence.","de":"Eine Einzelcoaching-Sitzung, um zu erkunden, was in dir lebendig ist, Klarheit zu finden und deinen nächsten Schritt mit Zuversicht zu gehen."},"duration":"60 min","price":75,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},{"id":"inner-compass-package","name":{"en":"Inner Compass Package (4 Sessions)","de":"Innerer Kompass Paket (4 Sitzungen)"},"description":{"en":"A four-session coaching journey to go deeper into self-discovery, patterns, and intentional living.","de":"Eine vierteilige Coaching-Reise, um tiefer in Selbstentdeckung, Muster und bewusstes Leben einzutauchen."},"duration":"4 × 60 min","price":260,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"}]}
     };
 
@@ -197,6 +202,20 @@
       });
     });
 
+    // ── Mobile nav hamburger ──
+    var hamburger = document.getElementById('nav-hamburger');
+    var navLinks  = document.getElementById('nav-links');
+    hamburger.addEventListener('click', function () {
+      nav.classList.toggle('nav-open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('nav-open');
+        navLinks.classList.remove('open');
+      });
+    });
+
     // ── Nav + parallax on scroll ──
     var nav = document.querySelector('.site-nav');
     var heroBg = document.querySelector('.hero-bg');
@@ -232,14 +251,41 @@
         var d = new Date(ev.date + 'T00:00:00');
         var dayNum = d.getDate();
         var dayName = ev.day[lang];
+
+        // Spots logic
+        var spotsLeft = ev.capacity != null ? ev.capacity - (ev.reserved || 0) : null;
+        var soldOut   = spotsLeft !== null && spotsLeft <= 0;
+
+        // Small badge shown in collapsed row (only when low or sold out)
+        var badge = '';
+        if (soldOut) {
+          badge = '<span class="spots-badge sold-out">' + (lang === 'de' ? 'Ausgebucht' : 'Sold out') + '</span>';
+        } else if (spotsLeft !== null && spotsLeft <= 5) {
+          badge = '<span class="spots-badge low">' + spotsLeft + ' ' + (lang === 'de' ? 'Plätze frei' : 'spots left') + '</span>';
+        }
+
+        // Detail line in expanded panel
+        var spotsDetail = '';
+        if (spotsLeft !== null) {
+          spotsDetail = soldOut
+            ? '<p class="event-spots-detail sold-out">' + (lang === 'de' ? 'Diese Veranstaltung ist ausgebucht.' : 'This event is fully booked.') + '</p>'
+            : '<p class="event-spots-detail">' + spotsLeft + ' ' + (lang === 'de' ? 'von ' + ev.capacity + ' Plätzen frei' : 'of ' + ev.capacity + ' spots remaining') + '</p>';
+        }
+
+        // Reserve button or sold-out state
+        var reserveBtn = soldOut
+          ? '<span class="btn-outline btn-sm btn-disabled">' + (lang === 'de' ? 'Ausgebucht' : 'Sold out') + '</span>'
+          : '<a href="reserve.html?event=' + ev.id + '" class="btn-outline btn-sm">' + (lang === 'de' ? 'Reservieren' : 'Reserve') + '</a>';
+
         return '<div class="event-row reveal" style="transition-delay:' + (i * 0.09) + 's" onclick="this.classList.toggle(\'active\')">' +
           '<div class="event-date"><span class="event-day-name">' + dayName + '</span><span class="event-day-num">' + dayNum + '</span></div>' +
           '<div class="event-time">' + ev.time + '</div>' +
-          '<div class="event-name">' + ev.name[lang] + '</div>' +
+          '<div class="event-name">' + ev.name[lang] + badge + '</div>' +
           '<div class="event-hover">' +
             '<p class="event-desc">' + ev.description[lang] + '</p>' +
             '<p class="event-meta">' + ev.facilitatorFull + ' · ' + ev.currency + ev.price + '</p>' +
-            '<a href="reserve.html?event=' + ev.id + '" class="btn-outline btn-sm">' + (lang === 'de' ? 'Reservieren' : 'Reserve') + '</a>' +
+            spotsDetail +
+            reserveBtn +
           '</div>' +
         '</div>';
       }).join('');
@@ -253,11 +299,31 @@
       container.innerHTML = Object.keys(servicesData).map(function (key, idx) {
         var f = servicesData[key];
         var servicesHtml = f.services.map(function (s) {
+          var priceHtml;
+          if (s.tiers) {
+            priceHtml = '<div class="service-tiers">' +
+              s.tiers.map(function (t) {
+                var label = t.info ? t.info[lang] : t.duration;
+                var price = t.price != null
+                  ? s.currency + t.price + (t.pp ? ' p.p.' : '')
+                  : '—';
+                return '<div class="service-tier">' +
+                  '<span class="service-tier-info">' + label + '<em>' + price + '</em></span>' +
+                  '<a href="' + t.stripeLink + '" target="_blank" class="btn-outline btn-sm">' + (lang === 'de' ? 'Buchen' : 'Book') + '</a>' +
+                '</div>';
+              }).join('') +
+            '</div>';
+          } else {
+            priceHtml = '<p class="service-meta">' + s.duration + ' · ' + s.currency + s.price + '</p>' +
+              '<a href="' + s.stripeLink + '" target="_blank" class="btn-outline btn-sm">' + (lang === 'de' ? 'Buchen' : 'Book') + '</a>';
+          }
+          var durationTag = (s.duration && s.tiers && s.tiers[0].info)
+            ? '<p class="service-meta" style="margin-bottom:0.4rem">' + s.duration + '</p>' : '';
           return '<div class="service-item">' +
             '<h4>' + s.name[lang] + '</h4>' +
+            durationTag +
             '<p>' + s.description[lang] + '</p>' +
-            '<p class="service-meta">' + s.duration + ' · ' + s.currency + s.price + '</p>' +
-            '<a href="' + s.stripeLink + '" target="_blank" class="btn-outline btn-sm">' + (lang === 'de' ? 'Buchen' : 'Book') + '</a>' +
+            priceHtml +
           '</div>';
         }).join('');
         return '<div class="services-col reveal" style="transition-delay:' + (idx * 0.13) + 's">' +
@@ -290,63 +356,6 @@
     setLang(currentLang);
     initReveal();
 
-    // ── Hero Particles ──
-    (function () {
-      var canvas = document.getElementById('hero-canvas');
-      if (!canvas) return;
-      var ctx = canvas.getContext('2d');
-      var particles = [];
-      var COUNT = 42;
-      var animId;
-
-      function resize() {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-      }
-
-      function makeParticle() {
-        return {
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: 1 + Math.random() * 2.2,
-          vy: -(0.12 + Math.random() * 0.22),
-          vx: (Math.random() - 0.5) * 0.15,
-          opacity: 0.12 + Math.random() * 0.32,
-          phase: Math.random() * Math.PI * 2,
-          freq: 0.004 + Math.random() * 0.007
-        };
-      }
-
-      window.addEventListener('resize', resize, { passive: true });
-      resize();
-      for (var i = 0; i < COUNT; i++) particles.push(makeParticle());
-
-      function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(function (p) {
-          p.phase += p.freq;
-          p.x += Math.sin(p.phase) * 0.45 + p.vx;
-          p.y += p.vy;
-          if (p.y < -8) { p.y = canvas.height + 8; p.x = Math.random() * canvas.width; }
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(250,250,245,' + p.opacity + ')';
-          ctx.fill();
-        });
-        animId = requestAnimationFrame(draw);
-      }
-
-      // Only animate when hero is visible
-      var heroEl = document.querySelector('.hero');
-      var heroVis = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) {
-          animId = requestAnimationFrame(draw);
-        } else {
-          cancelAnimationFrame(animId);
-        }
-      });
-      if (heroEl) heroVis.observe(heroEl);
-    })();
   </script>
 </body>
 </html>

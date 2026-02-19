@@ -672,6 +672,39 @@ footer {
   margin-bottom: 0.75rem;
 }
 
+/* ── Service tiers (multi-duration pricing) ───────────── */
+
+.service-tiers {
+  margin-bottom: 0.5rem;
+}
+
+.service-tier {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.service-tier:last-child {
+  border-bottom: none;
+  margin-bottom: 0.25rem;
+}
+
+.service-tier-info {
+  font-size: 0.82rem;
+  color: var(--accent);
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.service-tier-info em {
+  font-style: normal;
+  color: var(--text-light);
+  font-weight: 400;
+}
+
 .view-profile {
   display: inline-block;
   margin-top: 1rem;
@@ -1213,6 +1246,138 @@ footer {
 .event-row:hover,
 .event-row.active {
   background: rgba(255, 255, 255, 0.045);
+}
+
+/* ── Spots availability ──────────────────────────────── */
+
+/* Calendar — badge in collapsed event row */
+.spots-badge {
+  display: block;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 0.25rem;
+}
+
+.spots-badge.low  { color: #c9956a; }
+.spots-badge.sold-out { color: var(--text-muted); }
+
+/* Calendar — detail line in expanded event panel */
+.event-spots-detail {
+  font-size: 0.82rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.event-spots-detail.sold-out { color: var(--text-muted); }
+
+/* Disabled sold-out button */
+.btn-disabled {
+  opacity: 0.45;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Reserve page — spots line */
+.res-spots {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-top: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+.res-spots.low { color: #c9956a; }
+
+/* Reserve page — sold out message */
+.res-sold-out {
+  text-align: center;
+  padding: 2rem 0 1rem;
+}
+
+.res-sold-out p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Mobile navigation — hamburger ──────────────────── */
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 11;
+  flex-shrink: 0;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--text-light);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .nav-hamburger {
+    display: flex;
+  }
+
+  /* Overlay menu */
+  .nav-links {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(36, 54, 62, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    z-index: 10;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    font-size: 1.1rem;
+    letter-spacing: 0.14em;
+    text-align: center;
+  }
+
+  .nav-lang {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+    gap: 0.25rem;
+  }
+
+  /* Hamburger → X animation */
+  .site-nav.nav-open .nav-hamburger span:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+  }
+  .site-nav.nav-open .nav-hamburger span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .site-nav.nav-open .nav-hamburger span:nth-child(3) {
+    transform: translateY(-6.5px) rotate(-45deg);
+  }
 }
 
 /* ── Mobile: hide wave on small screens ──────────────── */

@@ -28,6 +28,13 @@
         <p id="res-event-time"></p>
         <p id="res-event-facilitator"></p>
         <p id="res-event-price" style="margin-top: 0.75rem; color: var(--text-light); font-size: 1.1rem;"></p>
+        <p id="res-event-spots"></p>
+      </div>
+
+      <!-- Sold out message (hidden unless sold out) -->
+      <div id="res-sold-out" class="res-sold-out" style="display:none">
+        <p data-en="This event is fully booked." data-de="Diese Veranstaltung ist ausgebucht.">This event is fully booked.</p>
+        <a href="home.html#calendar" class="btn-outline" data-en="See other events" data-de="Andere Veranstaltungen">See other events</a>
       </div>
 
       <!-- Reservation Form -->
@@ -89,13 +96,13 @@
       steffi: { tc: 'legal/steffi-agb.html', pp: 'legal/steffi-datenschutz.html' }
     };
 
-    // ── Inline event data ──
+    // ── Inline event data ── (keep capacity/reserved in sync with home.html)
     var eventsData = [
-      {"id":"opening-ceremony","name":{"en":"Opening Ceremony","de":"Eröffnungszeremonie"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-14","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":25,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"sonic-rest-reset","name":{"en":"Sonic Rest & Reset","de":"Sonic Rest & Reset"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-17","day":{"en":"Tue","de":"Di"},"time":"17:00 – 20:00","price":35,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"sacred-cycle","name":{"en":"Sacred Cycle","de":"Sacred Cycle"},"facilitator":"steffi","facilitatorFull":"Stefanie Gann","date":"2026-03-21","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":30,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"tea-lounge","name":{"en":"Tea Lounge","de":"Tee-Lounge"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-28","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":15,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
-      {"id":"muse-choir","name":{"en":"Muse Choir","de":"Muse Choir"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-04-04","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":20,"currency":"€","stripeLink":"https://buy.stripe.com/PLACEHOLDER"}
+      {"id":"opening-ceremony","name":{"en":"Opening Ceremony","de":"Eröffnungszeremonie"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-14","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":25,"currency":"€","capacity":20,"reserved":0,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"sonic-rest-reset","name":{"en":"Sonic Rest & Reset","de":"Sonic Rest & Reset"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-17","day":{"en":"Tue","de":"Di"},"time":"17:00 – 20:00","price":35,"currency":"€","capacity":15,"reserved":0,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"sacred-cycle","name":{"en":"Sacred Cycle","de":"Sacred Cycle"},"facilitator":"steffi","facilitatorFull":"Stefanie Gann","date":"2026-03-21","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":30,"currency":"€","capacity":12,"reserved":0,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"tea-lounge","name":{"en":"Tea Lounge","de":"Tee-Lounge"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-03-28","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":15,"currency":"€","capacity":12,"reserved":0,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"},
+      {"id":"muse-choir","name":{"en":"Muse Choir","de":"Muse Choir"},"facilitator":"thembe","facilitatorFull":"Thembelihle Mchunu","date":"2026-04-04","day":{"en":"Sat","de":"Sa"},"time":"10:00 – 12:00","price":20,"currency":"€","capacity":20,"reserved":0,"stripeLink":"https://buy.stripe.com/PLACEHOLDER"}
     ];
 
     // ── Load event from URL param ──
@@ -120,6 +127,26 @@
       document.getElementById('res-event-time').textContent = ev.time;
       document.getElementById('res-event-facilitator').textContent = (lang === 'de' ? 'mit ' : 'with ') + ev.facilitatorFull;
       document.getElementById('res-event-price').textContent = ev.currency + ev.price;
+
+      // Spots availability
+      var spotsEl = document.getElementById('res-event-spots');
+      var form    = document.getElementById('reserve-form');
+      var soldOutEl = document.getElementById('res-sold-out');
+      if (ev.capacity != null) {
+        var spotsLeft = ev.capacity - (ev.reserved || 0);
+        var soldOut   = spotsLeft <= 0;
+        if (soldOut) {
+          spotsEl.textContent = '';
+          form.style.display    = 'none';
+          soldOutEl.style.display = 'block';
+        } else {
+          var spotsText = lang === 'de'
+            ? spotsLeft + ' von ' + ev.capacity + ' Plätzen frei'
+            : spotsLeft + ' of ' + ev.capacity + ' spots remaining';
+          spotsEl.textContent = spotsText;
+          spotsEl.className   = spotsLeft <= 5 ? 'res-spots low' : 'res-spots';
+        }
+      }
 
       // Set legal links
       var links = legalLinks[ev.facilitator];
