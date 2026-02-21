@@ -267,6 +267,85 @@ h2 {
   margin: 2.5rem auto;
 }
 
+/* ── Decorative Line Drawings ────────────────────── */
+
+/* Side reeds — tall, flowing botanical illustrations */
+.deco-reeds {
+  position: absolute;
+  top: 5%;
+  width: 90px;
+  height: 600px;
+  color: rgba(250, 250, 245, 0.13);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.deco-reeds--left {
+  left: 1.5rem;
+}
+
+.deco-reeds--right {
+  right: 1.5rem;
+  transform: scaleX(-1);
+}
+
+/* Gentle sway animation for reeds */
+@keyframes reedsSwayLeft {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(1.2deg); }
+}
+
+@keyframes reedsSwayRight {
+  0%, 100% { transform: scaleX(-1) rotate(0deg); }
+  50%      { transform: scaleX(-1) rotate(-1.2deg); }
+}
+
+.deco-reeds--left {
+  transform-origin: bottom center;
+  animation: reedsSwayLeft 8s ease-in-out infinite;
+}
+
+.deco-reeds--right {
+  transform-origin: bottom center;
+  animation: reedsSwayRight 10s ease-in-out infinite;
+}
+
+/* Wave divider between sections */
+.deco-wave-divider {
+  width: 180px;
+  margin: 2.5rem auto;
+  color: rgba(250, 250, 245, 0.5);
+}
+
+.deco-wave-divider svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Lotus / water lily accent */
+.deco-lotus {
+  width: 50px;
+  height: 25px;
+  margin: 0 auto 1rem;
+  display: block;
+  color: rgba(250, 250, 245, 0.5);
+}
+
+/* Hide side reeds on narrower screens where they'd overlap content */
+@media (max-width: 900px) {
+  .deco-reeds {
+    width: 60px;
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: 700px) {
+  .deco-reeds {
+    display: none;
+  }
+}
+
 /* ── Footer ───────────────────────────────────────── */
 
 footer {
