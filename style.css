@@ -346,6 +346,91 @@ h2 {
   }
 }
 
+/* ── Section-level decorative elements (home page) ── */
+
+/* Side reeds within sections */
+.deco-reeds-section {
+  position: absolute;
+  top: 8%;
+  width: 70px;
+  height: 420px;
+  color: rgba(250, 250, 245, 0.1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.deco-reeds-section--left {
+  left: 2rem;
+  transform-origin: bottom center;
+  animation: reedsSwayLeft 9s ease-in-out infinite;
+}
+
+.deco-reeds-section--right {
+  right: 2rem;
+  transform-origin: bottom center;
+  animation: reedsSwayRight 11s ease-in-out infinite;
+}
+
+.deco-reeds-section--short {
+  height: 300px;
+  top: 12%;
+}
+
+/* Flowing water lines — horizontal accents */
+.deco-flow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 340px;
+  max-width: 60%;
+  color: rgba(250, 250, 245, 0.12);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.deco-flow--top {
+  top: 1.5rem;
+}
+
+.deco-flow--bottom {
+  bottom: 4.5rem;
+}
+
+.deco-flow svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Lotus accent — centered above section content */
+.deco-lotus-section {
+  display: block;
+  width: 60px;
+  height: 30px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 0;
+  color: rgba(250, 250, 245, 0.18);
+  pointer-events: none;
+}
+
+/* Responsive: hide side reeds on smaller screens */
+@media (max-width: 900px) {
+  .deco-reeds-section {
+    width: 50px;
+    opacity: 0.6;
+  }
+}
+
+@media (max-width: 700px) {
+  .deco-reeds-section {
+    display: none;
+  }
+  .deco-flow {
+    width: 220px;
+  }
+}
+
 /* ── Footer ───────────────────────────────────────── */
 
 footer {
@@ -1469,5 +1554,242 @@ footer {
   .mission::after,
   .about::before {
     display: none;
+  }
+}
+
+/* ── Thembe Profile — Cinematic Layout ───────────── */
+
+.thembe-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thembe-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+}
+
+.thembe-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(45, 65, 75, 0.25) 0%,
+    rgba(45, 65, 75, 0.5) 50%,
+    rgba(74, 107, 122, 0.95) 100%
+  );
+}
+
+.thembe-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  opacity: 0;
+  animation: fadeUp 1.2s ease 0.3s forwards;
+}
+
+.thembe-hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.thembe-hero-name {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-style: italic;
+  font-size: clamp(4rem, 12vw, 8rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+  color: var(--text-light);
+}
+
+.thembe-hero-tagline {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.thembe-scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  animation: bobble 2s ease-in-out infinite;
+  opacity: 0;
+  animation: bobble 2s ease-in-out 1.5s infinite, fadeUp 1s ease 1.5s forwards;
+}
+
+/* ── Story sections ── */
+
+.thembe-story {
+  background: var(--bg-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  padding: 6rem 2rem;
+}
+
+.thembe-story-section {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.thembe-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  line-height: 1.4;
+  text-align: center;
+  max-width: 700px;
+  color: var(--text-light);
+}
+
+.thembe-body {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 2;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 540px;
+}
+
+/* ── Thembe Portrait ── */
+
+.thembe-portrait-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.thembe-portrait {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 0 60px rgba(138, 171, 184, 0.25),
+    0 0 120px rgba(138, 171, 184, 0.1);
+  animation: portraitBreathe 6s ease-in-out infinite;
+}
+
+.thembe-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  transform: rotate(-90deg);
+}
+
+@keyframes portraitBreathe {
+  0%, 100% {
+    box-shadow:
+      0 0 40px rgba(138, 171, 184, 0.15),
+      0 0 80px rgba(138, 171, 184, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 70px rgba(138, 171, 184, 0.35),
+      0 0 140px rgba(138, 171, 184, 0.12);
+  }
+}
+
+@media (max-width: 480px) {
+  .thembe-portrait {
+    width: 260px;
+    height: 260px;
+  }
+}
+
+/* ── Thembe Flourish Line ── */
+
+.thembe-flourish-section {
+  position: relative;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.thembe-flourish {
+  width: 100%;
+  height: 40px;
+  opacity: 0;
+  animation: flourishDraw 1.5s ease forwards;
+}
+
+.thembe-flourish-section.visible .thembe-flourish,
+.thembe-flourish-section:has(.reveal.visible) .thembe-flourish {
+  opacity: 1;
+}
+
+@keyframes flourishDraw {
+  from {
+    opacity: 0;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+  }
+  to {
+    opacity: 1;
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 0;
+  }
+}
+
+.thembe-story-video {
+  width: 100%;
+  max-width: 720px;
+}
+
+.thembe-story-video video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.thembe-link {
+  color: var(--text-light);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--accent);
+}
+
+.thembe-link:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .thembe-story {
+    padding: 4rem 1.5rem;
+    gap: 3rem;
+  }
+
+  .thembe-hero-name {
+    font-size: 3.5rem;
   }
 }
