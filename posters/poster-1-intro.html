@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oasis — Poster 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    @page {
+      size: A3 portrait;
+      margin: 0;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #4A6B7A;
+      --text-light: #FAFAF5;
+      --text-muted: rgba(250, 250, 245, 0.7);
+      --accent: #8AABB8;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Jost', 'Helvetica Neue', sans-serif;
+    }
+
+    html, body {
+      width: 297mm;
+      height: 420mm;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--text-light);
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .poster {
+      position: relative;
+      width: 297mm;
+      height: 420mm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* ── Background ── */
+
+    .poster-bg {
+      position: absolute;
+      inset: 0;
+      background: url('../assets/bg-water.png') center center / cover no-repeat;
+    }
+
+    .poster-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(38, 58, 68, 0.72) 0%,
+        rgba(45, 65, 75, 0.82) 40%,
+        rgba(52, 80, 96, 0.88) 100%
+      );
+    }
+
+    /* ── Content ── */
+
+    .poster-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 50mm 30mm;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    .poster-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .poster-middle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18mm;
+    }
+
+    .poster-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8mm;
+    }
+
+    /* ── Logo ── */
+
+    .poster-logo img {
+      width: 28mm;
+      height: 28mm;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.3));
+    }
+
+    /* ── Eyebrow ── */
+
+    .poster-eyebrow {
+      font-family: var(--font-body);
+      font-size: 4.5mm;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 8mm;
+    }
+
+    /* ── Headline ── */
+
+    .poster-headline {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-style: italic;
+      font-size: 16mm;
+      line-height: 1.25;
+      letter-spacing: 0.01em;
+      max-width: 220mm;
+      color: var(--text-light);
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ── Body ── */
+
+    .poster-body {
+      font-family: var(--font-body);
+      font-size: 5.8mm;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 195mm;
+    }
+
+    /* ── Divider ── */
+
+    .poster-divider {
+      width: 30mm;
+      height: 0.3mm;
+      background: rgba(138, 171, 184, 0.45);
+    }
+
+    /* ── Details ── */
+
+    .poster-details {
+      font-family: var(--font-body);
+      font-size: 4.2mm;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── CTA ── */
+
+    .poster-cta {
+      display: inline-block;
+      padding: 4.5mm 14mm;
+      border: 0.4mm solid var(--text-light);
+      border-radius: 2.5mm;
+      font-family: var(--font-body);
+      font-size: 4.8mm;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    /* ── URL ── */
+
+    .poster-url {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-style: italic;
+      font-size: 8mm;
+      letter-spacing: 0.04em;
+      color: var(--text-light);
+    }
+
+    /* ── Decorative flourish ── */
+
+    .poster-flourish {
+      position: absolute;
+      bottom: 15mm;
+      left: 0;
+      right: 0;
+      height: 8mm;
+      z-index: 1;
+      opacity: 0.12;
+    }
+
+    .poster-flourish svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Print ── */
+
+    @media print {
+      html, body {
+        width: 297mm;
+        height: 420mm;
+      }
+
+      .poster {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="poster">
+    <div class="poster-bg"></div>
+    <div class="poster-overlay"></div>
+
+    <div class="poster-content">
+
+      <div class="poster-top">
+        <div class="poster-logo">
+          <img src="../assets/logo.png" alt="Oasis">
+        </div>
+        <p class="poster-eyebrow">Heidelberg</p>
+      </div>
+
+      <div class="poster-middle">
+        <h1 class="poster-headline">A Place to Breathe.<br>To Rest.<br>To Return to Yourself.</h1>
+
+        <p class="poster-body">Oasis is Heidelberg's first female sanctuary — a carefully held space where women gather to pause, restore, and reconnect. Bodywork. Sound. Circle. Silence. Everything your nervous system has been longing for.</p>
+
+        <div class="poster-divider"></div>
+
+        <p class="poster-details">Female Sanctuary · Heidelberg · Opening Soon</p>
+      </div>
+
+      <div class="poster-bottom">
+        <div class="poster-cta">Join the Waiting List</div>
+        <p class="poster-url">oasiscollective.de</p>
+      </div>
+
+    </div>
+
+    <div class="poster-flourish">
+      <svg viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,20 C200,20 250,5 400,14 C480,18 520,34 600,28 C680,22 720,10 800,14 C950,5 1000,20 1200,20" fill="none" stroke="rgba(250,250,245,1)" stroke-width="0.8"/>
+      </svg>
+    </div>
+  </div>
+
+</body>
+</html>
