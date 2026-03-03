@@ -28,9 +28,8 @@
     }
 
     html, body {
-      width: 297mm;
-      height: 420mm;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
     }
 
     body {
@@ -40,12 +39,18 @@
       -webkit-font-smoothing: antialiased;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #2d414b;
     }
 
     .poster {
       position: relative;
-      width: 297mm;
-      height: 420mm;
+      width: 100vw;
+      height: calc(100vw * 420 / 297);
+      max-height: 100vh;
+      max-width: calc(100vh * 297 / 420);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -81,8 +86,9 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 50mm 30mm;
+      padding: 12% 10%;
       height: 100%;
+      width: 100%;
       justify-content: space-between;
     }
 
@@ -96,21 +102,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18mm;
+      gap: 4.5%;
     }
 
     .poster-bottom {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8mm;
+      gap: 2%;
     }
 
     /* ── Logo ── */
 
     .poster-logo img {
-      width: 28mm;
-      height: 28mm;
+      width: 9%;
+      aspect-ratio: 1;
       object-fit: contain;
       filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.3));
     }
@@ -119,12 +125,12 @@
 
     .poster-eyebrow {
       font-family: var(--font-body);
-      font-size: 4.5mm;
+      font-size: clamp(0.55rem, 1.1vw, 1rem);
       font-weight: 400;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-top: 8mm;
+      margin-top: 2%;
     }
 
     /* ── Headline ── */
@@ -133,10 +139,10 @@
       font-family: var(--font-display);
       font-weight: 300;
       font-style: italic;
-      font-size: 16mm;
+      font-size: clamp(1.6rem, 3.8vw, 3.6rem);
       line-height: 1.25;
       letter-spacing: 0.01em;
-      max-width: 220mm;
+      max-width: 85%;
       color: var(--text-light);
       text-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
     }
@@ -145,18 +151,18 @@
 
     .poster-body {
       font-family: var(--font-body);
-      font-size: 5.8mm;
+      font-size: clamp(0.65rem, 1.4vw, 1.25rem);
       font-weight: 300;
       line-height: 1.85;
       color: var(--text-muted);
-      max-width: 195mm;
+      max-width: 80%;
     }
 
     /* ── Divider ── */
 
     .poster-divider {
-      width: 30mm;
-      height: 0.3mm;
+      width: 10%;
+      height: 1px;
       background: rgba(138, 171, 184, 0.45);
     }
 
@@ -164,7 +170,7 @@
 
     .poster-details {
       font-family: var(--font-body);
-      font-size: 4.2mm;
+      font-size: clamp(0.5rem, 1vw, 0.9rem);
       font-weight: 400;
       letter-spacing: 0.18em;
       text-transform: uppercase;
@@ -175,11 +181,11 @@
 
     .poster-cta {
       display: inline-block;
-      padding: 4.5mm 14mm;
-      border: 0.4mm solid var(--text-light);
-      border-radius: 2.5mm;
+      padding: 0.8em 2.5em;
+      border: 1px solid var(--text-light);
+      border-radius: 6px;
       font-family: var(--font-body);
-      font-size: 4.8mm;
+      font-size: clamp(0.55rem, 1.15vw, 1rem);
       font-weight: 400;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -192,7 +198,7 @@
       font-family: var(--font-display);
       font-weight: 300;
       font-style: italic;
-      font-size: 8mm;
+      font-size: clamp(1rem, 1.9vw, 1.8rem);
       letter-spacing: 0.04em;
       color: var(--text-light);
     }
@@ -201,10 +207,10 @@
 
     .poster-flourish {
       position: absolute;
-      bottom: 15mm;
+      bottom: 4%;
       left: 0;
       right: 0;
-      height: 8mm;
+      height: 2%;
       z-index: 1;
       opacity: 0.12;
     }
@@ -220,9 +226,18 @@
       html, body {
         width: 297mm;
         height: 420mm;
+        background: none;
+      }
+
+      body {
+        display: block;
       }
 
       .poster {
+        width: 297mm;
+        height: 420mm;
+        max-height: none;
+        max-width: none;
         page-break-after: avoid;
         page-break-inside: avoid;
       }
